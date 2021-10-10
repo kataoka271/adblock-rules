@@ -33,12 +33,16 @@ def main():
     adblockNanjFile = "280blocker_adblock_filter_nanj.txt"
     if can_update(today, adblockFile):
         fetch(adblockUrl, adblockFile)
+        print("update: {}".format(adblockFile))
     if can_update(today, domainFile):
         fetch(domainUrl, domainFile)
+        print("update: {}".format(domainFile))
     if can_update(today, nanjFile):
         fetch(nanjUrl, nanjFile)
+        print("update: {}".format(nanjFile))
     if can_update(today, adblockNanjFile):
         concat(adblockFile, nanjFile, adblockNanjFile)
+        print("update: {}".format(adblockNanjFile))
 
 
 if __name__ == '__main__':
