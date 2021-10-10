@@ -1,0 +1,39 @@
+! Title: なんJ拡張フィルター：DNSルール
+! Version: 2020-11-15
+! Homepage: https://wikiwiki.jp/nanj-adguard/%E3%81%AA%E3%82%93J%E6%8B%A1%E5%BC%B5%E3%83%95%E3%82%A3%E3%83%AB%E3%82%BF%E3%83%BC
+! License: CC0 (http://creativecommons.org/publicdomain/zero/1.0/:http://creativecommons.org/publicdomain/zero/1.0/)
+! Description: 280blocker domain filter(AdGuard_format)購読時の広告ブロックを強固にするためにDNSユーザーフィルタで購読するフィルタ。
+!
+!【アプリ】
+!●ES File Explorer(現在はGoogle Playから削除)がバックグラウンドで密かに通信しているURL
+||appsflyer.com^
+||estrongs.com^
+||baidu.com^
+||duapps.com^
+!
+!●LINE(jp.naver.line.android)のニュースの広告
+!https://egg.5ch.net/test/read.cgi/android/1544804906/493
+||a.line.me^
+!
+!●ChMate(jp.co.airfront.android.a2chMate)の広告
+||amazon-adsystem.com^
+!
+!【不具合・デメリットを含むルール】
+!◆以下のルールの「!」を外してDNSユーザーフィルタに追加してください。
+!
+!●google-analytics(プライバシー)
+!★280には「||ssl-google-analytics.l.google.com」としかありません。一部のアプリ・サイトでは不具合が出ます。その場合は「||google-analytics.com^$domain=~domain1.com|~domain2.com」と並べてください。不具合が出た場合はWikiで報告・相談しましょう。
+!||google-analytics.com^
+!
+!●LINE(jp.naver.line.android)の広告
+!★一部機能が正常に動作しなくなります。
+!https://egg.5ch.net/test/read.cgi/android/1554363290/960
+!||obs.line-scdn.net^
+!||scdn.line-apps.com^
+!★「スタティックファイルのホスティングとしても使われている」との報告あり。
+!https://logroid.blogspot.com/2012/06/adaway-hosts-for-japan.html?showComment=1581855388991#c7086501616772860789
+!||d.line-scdn.net^
+!
+!●graph.facebook.com使用アプリ(MX Player等)の広告
+!★無料版ユーザーでもgraph.facebook.com使用アプリ(MX Player等)の広告をブロックすることができるようになりますが、一部のアプリのFacebook連携で不具合が発生する場合があります。
+!||graph.facebook.com^

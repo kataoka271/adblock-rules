@@ -5456,7 +5456,6 @@ nakasoku.blog18.fc2.com##.rss_box
 ~google.com,~google.co.jp,~yahoo.co.jp,~bing.com,~news-edge.com##a[href*=".news-edge.com"] 
 ~google.com,~google.co.jp,~yahoo.co.jp,~bing.com,~world-best-news.doorblog.jp##a[href*="//world-best-news.doorblog.jp/"]
 ~google.com,~google.co.jp,~yahoo.co.jp,~bing.com,~matometatta-news.net##a[href*="//matometatta-news.net/"]
-
 ! Title: なんJ改修フィルター
 ! Homepage: http://wikiwiki.jp/nanj-adguard/
 ! License: CC0 (http://creativecommons.org/publicdomain/zero/1.0/)
@@ -5535,3 +5534,260 @@ hosyusokuhou.jp##div.abox
 ! ★無料版ユーザー向け厳罰化ルール★
 ! 以下の「!」を削除すると、一部のアプリのFacebook連携で不具合が発生することがありますが、無料版ユーザーでもgraph.facebook.com使用アプリ（MX Player等）の広告をブロックすることができます。
 !||graph.facebook.com^$app=com.adguard.dns
+! Title: なんJ拡張フィルター：一般ルール
+! Version: 2020-11-15
+! Homepage: https://wikiwiki.jp/nanj-adguard/%E3%81%AA%E3%82%93J%E6%8B%A1%E5%BC%B5%E3%83%95%E3%82%A3%E3%83%AB%E3%82%BF%E3%83%BC
+! License: CC0 (http://creativecommons.org/publicdomain/zero/1.0/:http://creativecommons.org/publicdomain/zero/1.0/)
+! Description: 280blockerが未対応の広告等を発見して280blockerを補完するためのユーザールールで購読するフィルタ。
+!
+!【広告】
+!
+!●togetter.comの上部バナー
+togetter.com##.appdl_header
+!
+!●dgpot.comのアフィリエイトブログパーツ
+!https://dgpot.com/guide_affiliate.php
+||dgpot.com/blogparts^$third-party
+!
+!●jalan.netの編集部のおすすめ特集という広告
+www.jalan.net##.jsc-top__specialAdArea
+!
+!●itest.5ch.netのアラート(メンテナンス情報・すすコイン・広告)
+!https://egg.5ch.net/test/read.cgi/android/1556760647/244
+itest.5ch.net,itest.bbspink.com##.alert
+!
+!●itest.5ch.netの浪人(CheckBOX/login/広告)
+!https://egg.5ch.net/test/read.cgi/android/1556760647/244
+itest.5ch.net,itest.bbspink.com##.use_ronin_label
+itest.5ch.net,itest.bbspink.com##.roninform_wrap
+||itest.5ch.net/assets/img/ronin_premium_640x100.png
+!
+!●itest.5ch.netのレス1002の非表示
+itest.5ch.net,itest.bbspink.com###res_1002
+!
+!●itest.5ch.netのスレッド最下部のスレッド一覧
+!https://egg.5ch.net/test/read.cgi/android/1556760647/244
+itest.5ch.net,itest.bbspink.com##.show.subback.quotes_body
+!
+!●itest.5ch.netの下部overlayバナー広告枠
+itest.5ch.net,itest.bbspink.com###float-bnr
+!
+!●itest.5ch.netの返信元(アンカー[>>])ポップアップの広告枠(コメントの上(>>1のみ)/下)
+!https://egg.5ch.net/test/read.cgi/android/1556760647/244
+itest.5ch.net,itest.bbspink.com##.margin-top-30px.js-popup-res-ad
+itest.5ch.net,itest.bbspink.com##.margin-top-10px.js-popup-res-ad
+!
+!●itest.5ch.netの返信ビューの広告閉じるボタン(>>1の返信ビューのみ)
+itest.5ch.net,itest.bbspink.com##.large.card_content > .popup_closebox
+!
+!●itest.5ch.netの返信ビュー・ID書込み一覧の広告枠(上部/ミドル/下部)
+!https://egg.5ch.net/test/read.cgi/android/1556760647/244
+!>>最上部
+itest.5ch.net,itest.bbspink.com##.center.js-cardview_ad-320x180.first.card_content > iframe
+!>>ミドル(細枠残し)
+itest.5ch.net,itest.bbspink.com##.center.js-cardview_ad-320x50.card_content > iframe
+!>>ミドル(最初の細枠のみ残す)
+itest.5ch.net,itest.bbspink.com##.center.js-cardview_ad-320x50.card_content:nth-of-type(n+4)
+!>>最下部
+itest.5ch.net###js-cardview_ad > iframe
+itest.5ch.net,itest.bbspink.com###js-cardview_ad
+!
+!●itest.5ch.netの画像ビュー下部の広告枠
+itest.5ch.net,itest.bbspink.com###js-imageview-ad.imageview-ad
+!
+!●itest.5ch.netのURLクリック時のjumpページ(5ch外部への移動確認)
+!>>ページ上部の広告枠
+itest.5ch.net,itest.bbspink.com###ads
+!>>overlay広告枠
+itest.5ch.net,itest.bbspink.com###interstitial-ad-div-id
+!>>ページ下部の広告枠
+itest.5ch.net,itest.bbspink.com###ad_network
+itest.5ch.net,itest.bbspink.com###overlay_microad
+!
+!●itest.5ch.netのホーム・閲覧履歴のページ
+!各タブの上部広告枠(ニュース/人気順/新着/実況)
+itest.5ch.net##article > #main > .ranking > div[style="height: 320px; position: relative; text-align: center; overflow: hidden; margin: 0 auto; margin-bottom: 15px;"]
+itest.bbspink.com##article > #main > .ranking > div[style="height: 250px; position: relative; text-align: center; overflow: hidden; margin: 0 auto; margin-bottom: 15px;"]
+!
+!●itest.5ch.netの履歴タブ>閲覧履歴の上部広告枠
+itest.5ch.net##article > #main > div[style="height: 320px; position: relative; text-align: center; overflow: hidden; margin: 0 auto; margin-bottom: 15px;"]
+itest.bbspink.com##article > #main > div[style="height: 250px; position: relative; text-align: center; overflow: hidden; margin: 0 auto; margin-bottom: 15px;"]
+!
+!●itest.5ch.netの履歴タブ>閲覧履歴のタイトル下の広告枠
+itest.5ch.net,itest.bbspink.com##article > #main > #js-adstir-320x50 > .padding-bottom-10px
+!
+!●itest.5ch.netの履歴タブ>閲覧履歴の下部の広告枠
+itest.5ch.net,itest.bbspink.com##article > #main > #js-adstir-300x250 > .padding-10px
+!
+!●itest.5ch.netの板のトップページ
+!各タブ内の最上部の細い広告枠(通常順/人気/新着/未読/見た)
+itest.5ch.net###main > div.center[style="padding: 10px 0;"]
+!
+!●itest.bbspink.comのトップページ 上部の板一覧
+itest.bbspink.com###main > .board_list
+!
+!●itest.bbspink.comの書き込み欄の前後の広告枠(前/後)
+itest.bbspink.com##[class^="sproutad_frame"].background-gray.center
+itest.bbspink.com##[id="js-bottom-ad-300x250"].background-gray.center
+!
+!●itest.bbspink.comのスレッドページ最下部の広告枠
+itest.bbspink.com###instant_ad
+!
+!●itest.bbspink.comの返信ビュー・ID発言一覧の広告枠
+!>>最下部広告枠
+itest.bbspink.com##div.card_content:nth-last-of-type(1)
+!
+!【プライバシー】
+!
+!●teacup.comのカウンター
+!http://egg.5ch.net/test/read.cgi/android/1540387698/311
+||teacup.com/cgi-bin/Count.cgi^
+!
+!●juicer.ccのアクセス解析(https://www.j-wave.co.jp/jlc/等で使われている。)
+!https://egg.5ch.net/test/read.cgi/android/1546740498/27
+!https://egg.5ch.net/test/read.cgi/android/1546740498/187
+!https://techmemo.biz/webservices/juicer/
+||juicer.cc^
+!
+!●Equinix Japan Enterpriseのアクセス解析(www.cityheaven.net、www.girlsheaven-job.net等で使われている。)
+||sc-analytics.jp^
+!
+!【ソーシャルメディア】
+!
+!●hisorin.comのソーシャルボタン(280が二年間更新のないまとめブログに対応した記念)
+hisorin.com##.but
+!
+!●wanchan.jpのソーシャルボタン
+wanchan.jp##.sp_bottom_sns
+!
+!●note.muのソーシャルボタン
+note.mu##.p-article__share
+!
+!●日経電子版のソーシャルボタン
+r.nikkei.com##.nui-share
+!
+!●itest.bbspink.comのTwitter&LINEのボタン(LINE/SNS枠)
+itest.bbspink.com##a[href*="//lineit.line.me/share/ui?"]
+itest.bbspink.com##.socialwrap.socialwrap-margin5
+!
+!【セキュリティ】
+!
+!【迷惑要素】
+!
+!●bing.comのアプリ誘導(280未対応)
+bing.com###bnp_ttc_div
+!
+!●hisorin.comの外部サイト記事への誘導(280が二年間更新のないまとめブログに対応した記念)
+hisorin.com##.boxc:contains(人気の高いおすすめ記事)
+!
+!●jalan.netのアプリ誘導
+www.jalan.net###jsiApp
+!
+!●wanchan.jpのアプリ誘導
+wanchan.jp###app_link
+!
+!●carsensor.netのアプリ誘導
+www.carsensor.net##.applink
+!
+!●carsensor.netのchatbotバナー
+www.carsensor.net###chatbotLink
+!
+!●carsensor.netの迷惑な自社広報バナー
+www.carsensor.net##.direct_bkn
+!
+!●他サイト誘導型ランキングブログパーツ(広告もあるらしい。280は「!##a[href*="//pv4u.com/"]」と「!||pv4u.com」でブロックしていないみたい。どこかで不具合出る？それともニーズがある？)
+!https://pv4u.com/help/simple
+||pv4u.com^$third-party
+!
+!●itest.5ch.netで読み込み表示が終了しない時の対策
+!https://egg.5ch.net/test/read.cgi/android/1556760647/244
+!http://itest.5ch.net/assets/js/android/application.js
+!http://itest.5ch.net/assets/js/android/application.production.js?20200208
+!http://itest.bbspink.com/assets/js/android/application.js?20200122
+!>loading overlay + icon(読込み中のoverlayとアイコンの非表示)
+itest.5ch.net,itest.bbspink.com##[class="superloading js-bbspink-color"]
+itest.5ch.net,itest.bbspink.com##[class*="superloading"]
+!
+!●itest.5ch.netの読み込み表示「page top loading bar」
+!https://egg.5ch.net/test/read.cgi/android/1556760647/244
+itest.5ch.net,itest.bbspink.com###top-progress-bar
+!
+!●itest.5ch.netの「(｀・ω・´)描画しています 少々お待ち下さい」
+!https://egg.5ch.net/test/read.cgi/android/1556760647/244
+itest.5ch.net,itest.bbspink.com###thread_loading
+!
+!●itest.5ch.netの「(｀・ω・´)描画しています」(板トップページなどで[通常順・人気・新着・未読・見た・全閲覧履歴]を切り替えた時とその後にスマホの戻るボタンでページを戻った時の表示)
+!https://egg.5ch.net/test/read.cgi/android/1556760647/244
+itest.5ch.net,itest.bbspink.com###subback_loading
+!
+!●itest.5ch.netの画像読込み時のLoading icon(最初の読込みだけは表示される。前/次画像に有効→特にgifアニメの読み込み改善大)
+!https://egg.5ch.net/test/read.cgi/android/1556760647/244
+itest.5ch.net,itest.bbspink.com##[src="/assets/img/loading.gif"]
+!
+!●itest.5ch.netの画像読込み時Loading icon(最初の読込みを透明画像に置換してごまかす)
+!>>AdGuard v3.3からredirectサポート(loading.gifを透明画像に置換、置換なので読み込み改善なし)
+!>>フィルタが反映されない時はブラウザキャッシュ削除
+||itest.5ch.net/assets/img/loading.gif^$redirect=1x1-transparent.gif
+||itest.bbspink.com/assets/img/loading.gif^$redirect=1x1-transparent.gif
+!
+!●Yahoo! Japan リアルタイム検索 アプリ誘導
+||s.yimg.jp/images/serp/ts/banner/*$domain=search.yahoo.co.jp
+search.yahoo.co.jp##.TScontents__section,.TScarouselToApp
+!
+!【アプリ】
+!
+!◆プレミアム版ユーザーまたはv3.1以下のユーザー用です。v3.2以上の無料版ユーザーは「DNSルール」も購読してください。
+!
+!●GANMA(com.COMICSMART.GANMA)という無料漫画アプリの広告
+!http://egg.5ch.net/test/read.cgi/android/1532560197/791
+||app.adjust.com$app=com.COMICSMART.GANMA
+||scontent.xx.fbcdn.net$app=com.COMICSMART.GANMA
+||external.xx.fbcdn.net$app=com.COMICSMART.GANMA
+||www.facebook.com$app=com.COMICSMART.GANMA
+||repro-data-source.s3.amazonaws.com$app=com.COMICSMART.GANMA
+||reader.ganma.jp/api/1.0/applicationSupport/settings$app=com.COMICSMART.GANMA
+!
+!●Yahoo!天気(jp.co.yahoo.android.weather.type1)のバナー広告
+!◆httpsフィルタリング有効で機能します。
+!https://egg.5ch.net/test/read.cgi/android/1560587835/949
+||http://s.yimg.jp/images/weather/promo/banner^$app=jp.co.yahoo.android.weather.type1
+!
+!●Yahoo!乗換案内の広告
+|https://s.yimg.jp/dl/transit/android/app_setting.json$app=jp.co.yahoo.android.apps.transit
+!
+!●ES File Explorer(現在はGoogle Playから削除)がバックグラウンドで密かに通信しているURL
+||appsflyer.com^
+||estrongs.com^
+||baidu.com^
+||duapps.com^
+!
+!●LINE(jp.naver.line.android)のニュースタブの広告
+!https://egg.5ch.net/test/read.cgi/android/1544804906/493
+||a.line.me^$app=jp.naver.line.android
+!
+!●ChMate(jp.co.airfront.android.a2chMate)の広告
+||amazon-adsystem.com^$app=jp.co.airfront.android.a2chMate
+||ucontent.net^$app=jp.co.airfront.android.a2chMate
+!
+!【不具合・デメリットを含むルール】
+!◆以下のルールの「!」を外してユーザールールに追加してください。
+!
+!●google-analytics(プライバシー)
+!◆プレミアム版ユーザーまたはv3.1以下のユーザー用です。v3.2以上の無料版ユーザーは「DNSルール」を参照してください。
+!★280には「||ssl-google-analytics.l.google.com」としかありません。一部のアプリ・サイトでは不具合が出ます。その場合は「||google-analytics.com^$domain=~domain1.com|~domain2.com」と並べてください。不具合が出た場合はWikiで報告・相談しましょう。
+!||google-analytics.com^
+!
+!●LINE(jp.naver.line.android)の広告
+!◆プレミアム版ユーザーまたはv3.1以下のユーザー用です。v3.2以上の無料版ユーザーは「DNSルール」を参照してください。
+!★一部機能が正常に動作しなくなります。
+!https://egg.5ch.net/test/read.cgi/android/1554363290/960
+!||obs.line-scdn.net^
+!||scdn.line-apps.com^
+!★「スタティックファイルのホスティングとしても使われている」との報告あり。
+!https://logroid.blogspot.com/2012/06/adaway-hosts-for-japan.html?showComment=1581855388991#c7086501616772860789
+!||d.line-scdn.net^
+!
+!●graph.facebook.com使用アプリ(MX Player等)の広告
+!◆v3.1以下のユーザー用です。v3.2以上のユーザーは「DNSルール」を参照してください。
+!★無料版ユーザーでもgraph.facebook.com使用アプリ(MX Player等)の広告をブロックすることができるようになりますが、一部のアプリのFacebook連携で不具合が発生する場合があります。
+!||graph.facebook.com^
