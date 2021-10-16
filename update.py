@@ -96,29 +96,36 @@ def save_etags(etags_file):
 
 def main():
     today = datetime.today()
-    adblock_url = "https://280blocker.net/files/280blocker_adblock_{:%Y%m}.txt".format(today)
-    adblock_file = "280blocker_adblock_filter.txt"
-    domain_url = "https://280blocker.net/files/280blocker_domain_ag_{:%Y%m}.txt".format(today)
-    domain_file = "280blocker_domain_ag_filter.txt"
-    nanj_url = "https://raw.githubusercontent.com/nanj-adguard/nanj-filter/master/nanj-filter.txt"
-    nanj_file = "nanj-filter.txt"
-    nanj_supplement_url = "https://wikiwiki.jp/nanj-adguard/%E3%81%AA%E3%82%93J%E6%8B%A1%E5%BC%B5%E3%83%95%E3%82%A3%E3%83%AB%E3%82%BF%E3%83%BC"
-    nanj_supplement_file = "supplement_rules.txt"
-    nanj_dns_file = "DNS_rules.txt"
-    adblock_nanj_file = "280blocker_adblock_filter_nanj.txt"
-    domain_nanj_file = "280blocker_domain_ag_filter_nanj.txt"
+
+    n280_adblock_url = "https://280blocker.net/files/280blocker_adblock_{:%Y%m}.txt".format(today)
+    n280_adblock_file = "280blocker_adblock_filter.txt"
+    n280_domain_url = "https://280blocker.net/files/280blocker_domain_ag_{:%Y%m}.txt".format(today)
+    n280_domain_file = "280blocker_domain_ag_filter.txt"
+    nanj_ag_url = "https://raw.githubusercontent.com/nanj-adguard/nanj-filter/master/nanj-filter.txt"
+    nanj_ag_file = "nanj-filter.txt"
+    nanj_wiki_url = "https://wikiwiki.jp/nanj-adguard/%E3%81%AA%E3%82%93J%E6%8B%A1%E5%BC%B5%E3%83%95%E3%82%A3%E3%83%AB%E3%82%BF%E3%83%BC"
+    nanj_wiki_adblock_file = "supplement_rules.txt"
+    nanj_wiki_domain_file = "DNS_rules.txt"
+    merged_adblock_nanj_file = "280blocker_adblock_filter_nanj.txt"
+    merged_domain_nanj_file = "280blocker_domain_ag_filter_nanj.txt"
+
     etags_file = "etags"
+
     load_etags(etags_file)
-    b1 = fetch(adblock_url, adblock_file)
-    b2 = fetch(domain_url, domain_file)
-    b3 = fetch(nanj_url, nanj_file)
-    b4 = fetch_nanj_supplement(nanj_supplement_url, nanj_supplement_file, nanj_dns_file)
+
+    b1 = fetch(n280_adblock_url, n280_adblock_file)
+    b2 = fetch(n280_domain_url, n280_domain_file)
+    b3 = fetch(nanj_ag_url, nanj_ag_file)
+    b4 = fetch_nanj_supplement(nanj_wiki_url, nanj_wiki_adblock_file, nanj_wiki_domain_file)
+
     if b1 or b3 or b4:
-        concat(adblock_nanj_file, [adblock_file, nanj_file, nanj_supplement_file])
-        print("update: {}".format(adblock_nanj_file))
+        concat(merged_adblock_nanj_file, [n280_adblock_file, nanj_ag_file, nanj_wiki_adblock_file])
+        print("update: {}".format(merged_adblock_nanj_file))
+
     if b2 or b4:
-        concat(domain_nanj_file, [domain_file, nanj_dns_file])
-        print("update: {}".format(domain_nanj_file))
+        concat(merged_domain_nanj_file, [n280_domain_file, nanj_wiki_domain_file])
+        print("update: {}".format(merged_domain_nanj_file))
+
     save_etags(etags_file)
 
 
