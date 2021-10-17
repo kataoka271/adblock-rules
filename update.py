@@ -8,24 +8,28 @@ import urllib.error
 etags = {}
 
 
-def get_request(url):
+def get_request(url, key=None):
+    if key is None:
+        key = url
     try:
-        req = urllib.request.Request(url, headers={"If-None-Match": etags[url]})
+        req = urllib.request.Request(url, headers={"If-None-Match": etags[key]})
     except KeyError:
         req = urllib.request.Request(url)
     return req
 
 
-def fetch(url, filename) -> bool:
-    req = get_request(url)
+def fetch(url, filename, key=None) -> bool:
+    req = get_request(url, key)
     try:
         rf = urllib.request.urlopen(req)
     except urllib.error.HTTPError as e:
         print("error: {} {}: {}".format(e.code, e.reason, url))
         return False
     else:
+        if key is None:
+            key = url
         try:
-            etags[url] = rf.info()["etag"]
+            etags[key] = rf.info()["etag"]
         except KeyError:
             pass
         with open(filename, "wb") as wf:
@@ -113,8 +117,8 @@ def main():
 
     load_etags(etags_file)
 
-    b1 = fetch(n280_adblock_url, n280_adblock_file)
-    b2 = fetch(n280_domain_url, n280_domain_file)
+    b1 = fetch(n280_adblock_url, n280_adblock_file, key="https://280blocker.net/files/280blocker_adblock_xxxxxx.txt")
+    b2 = fetch(n280_domain_url, n280_domain_file, key="https://280blocker.net/files/280blocker_domain_ag_xxxxxx.txt")
     b3 = fetch(nanj_ag_url, nanj_ag_file)
     b4 = fetch_nanj_supplement(nanj_wiki_url, nanj_wiki_adblock_file, nanj_wiki_domain_file)
 
