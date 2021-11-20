@@ -102,12 +102,12 @@ def main():
     today = datetime.today()
 
     n280_adblock_url = "https://280blocker.net/files/280blocker_adblock_{:%Y%m}.txt".format(today)
-    n280_adblock_file = "dist/280blocker_adblock_filter.txt"
     n280_domain_url = "https://280blocker.net/files/280blocker_domain_ag_{:%Y%m}.txt".format(today)
-    n280_domain_file = "dist/280blocker_domain_ag_filter.txt"
     nanj_ag_url = "https://raw.githubusercontent.com/nanj-adguard/nanj-filter/master/nanj-filter.txt"
-    nanj_ag_file = "dist/nanj-filter.txt"
     nanj_wiki_url = "https://wikiwiki.jp/nanj-adguard/%E3%81%AA%E3%82%93J%E6%8B%A1%E5%BC%B5%E3%83%95%E3%82%A3%E3%83%AB%E3%82%BF%E3%83%BC"
+    n280_adblock_file = "dist/280blocker_adblock_filter.txt"
+    n280_domain_file = "dist/280blocker_domain_ag_filter.txt"
+    nanj_ag_file = "dist/nanj-filter.txt"
     nanj_wiki_adblock_file = "dist/supplement_rules.txt"
     nanj_wiki_domain_file = "dist/DNS_rules.txt"
     merged_adblock_nanj_file = "dist/280blocker_adblock_filter_nanj.txt"
