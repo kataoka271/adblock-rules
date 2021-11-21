@@ -101,12 +101,12 @@ def save_etags(etags_file):
 def main():
     today = datetime.today()
 
-    n280_adblock_url = "https://280blocker.net/files/280blocker_adblock_{:%Y%m}.txt".format(today)
-    n280_domain_url = "https://280blocker.net/files/280blocker_domain_ag_{:%Y%m}.txt".format(today)
+    r280_adblock_url = "https://280blocker.net/files/280blocker_adblock_{:%Y%m}.txt".format(today)
+    r280_domain_url = "https://280blocker.net/files/280blocker_domain_ag_{:%Y%m}.txt".format(today)
     nanj_ag_url = "https://raw.githubusercontent.com/nanj-adguard/nanj-filter/master/nanj-filter.txt"
     nanj_wiki_url = "https://wikiwiki.jp/nanj-adguard/%E3%81%AA%E3%82%93J%E6%8B%A1%E5%BC%B5%E3%83%95%E3%82%A3%E3%83%AB%E3%82%BF%E3%83%BC"
-    n280_adblock_file = "dist/280blocker_adblock_filter.txt"
-    n280_domain_file = "dist/280blocker_domain_ag_filter.txt"
+    r280_adblock_file = "dist/280blocker_adblock_filter.txt"
+    r280_domain_file = "dist/280blocker_domain_ag_filter.txt"
     nanj_ag_file = "dist/nanj-filter.txt"
     nanj_wiki_adblock_file = "dist/supplement_rules.txt"
     nanj_wiki_domain_file = "dist/DNS_rules.txt"
@@ -117,17 +117,17 @@ def main():
 
     load_etags(etags_file)
 
-    b1 = fetch(n280_adblock_url, n280_adblock_file, key="https://280blocker.net/files/280blocker_adblock_xxxxxx.txt")
-    b2 = fetch(n280_domain_url, n280_domain_file, key="https://280blocker.net/files/280blocker_domain_ag_xxxxxx.txt")
+    b1 = fetch(r280_adblock_url, r280_adblock_file, key="https://280blocker.net/files/280blocker_adblock_xxxxxx.txt")
+    b2 = fetch(r280_domain_url, r280_domain_file, key="https://280blocker.net/files/280blocker_domain_ag_xxxxxx.txt")
     b3 = fetch(nanj_ag_url, nanj_ag_file)
     b4 = fetch_nanj_supplement(nanj_wiki_url, nanj_wiki_adblock_file, nanj_wiki_domain_file)
 
     if b1 or b3 or b4:
-        concat(merged_adblock_nanj_file, [n280_adblock_file, nanj_ag_file, nanj_wiki_adblock_file])
+        concat(merged_adblock_nanj_file, [r280_adblock_file, nanj_ag_file, nanj_wiki_adblock_file])
         print("update: {}".format(merged_adblock_nanj_file))
 
     if b2 or b4:
-        concat(merged_domain_nanj_file, [n280_domain_file, nanj_wiki_domain_file])
+        concat(merged_domain_nanj_file, [r280_domain_file, nanj_wiki_domain_file])
         print("update: {}".format(merged_domain_nanj_file))
 
     save_etags(etags_file)
