@@ -1,3 +1,4 @@
+from typing import Dict
 from bs4 import BeautifulSoup
 from datetime import datetime
 import pickle
@@ -5,6 +6,7 @@ import urllib.request
 import urllib.error
 
 
+etags: Dict[str, str]
 etags = {}
 
 
