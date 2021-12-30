@@ -1,6 +1,4 @@
-# Copy of 280blocker
+# Adblock rules
 
-* [280blocker_adblock_filter.txt](https://github.com/kataoka271/adblock/raw/main/dist/280blocker_adblock_filter.txt)
-* [280blocker_domain_ag_filter.txt](https://github.com/kataoka271/adblock/raw/main/dist/280blocker_domain_ag_filter.txt)
-* [280blocker_adblock_filter_nanj.txt](https://github.com/kataoka271/adblock/raw/main/dist/280blocker_adblock_filter_nanj.txt)
-* [280blocker_domain_ag_filter_nanj.txt](https://github.com/kataoka271/adblock/raw/main/dist/280blocker_domain_ag_filter_nanj.txt)
+* [01_adblock_rules.txt](https://github.com/kataoka271/adblock/raw/main/dist/01_adblock_rules.txt)
+* [01_domain_ag_rules.txt](https://github.com/kataoka271/adblock/raw/main/dist/01_domain_ag_rules.txt)
