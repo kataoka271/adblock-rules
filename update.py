@@ -112,8 +112,8 @@ def main():
     nanj_ag_file = "dist/nanj-filter.txt"
     nanj_wiki_adblock_file = "dist/supplement_rules.txt"
     nanj_wiki_domain_file = "dist/DNS_rules.txt"
-    merged_adblock_nanj_file = "dist/01_adblock_rules.txt"
-    merged_domain_nanj_file = "dist/01_domain_ag_rules.txt"
+    conc_adblock_nanj_file = "dist/01_adblock_rules.txt"
+    conc_domain_nanj_file = "dist/01_domain_ag_rules.txt"
 
     etags_file = "cache/etags"
 
@@ -125,12 +125,12 @@ def main():
     b4 = fetch_nanj_supplement(nanj_wiki_url, nanj_wiki_adblock_file, nanj_wiki_domain_file)
 
     if b1 or b3 or b4:
-        concat(merged_adblock_nanj_file, [r280_adblock_file, nanj_ag_file, nanj_wiki_adblock_file])
-        print("update: {}".format(merged_adblock_nanj_file))
+        concat(conc_adblock_nanj_file, [r280_adblock_file, nanj_ag_file, nanj_wiki_adblock_file])
+        print("update: {}".format(conc_adblock_nanj_file))
 
     if b2 or b4:
-        concat(merged_domain_nanj_file, [r280_domain_file, nanj_wiki_domain_file])
-        print("update: {}".format(merged_domain_nanj_file))
+        concat(conc_domain_nanj_file, [r280_domain_file, nanj_wiki_domain_file])
+        print("update: {}".format(conc_domain_nanj_file))
 
     save_etags(etags_file)
 
