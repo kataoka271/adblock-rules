@@ -1,70 +1,84 @@
-from typing import Dict
-from bs4 import BeautifulSoup
-from datetime import datetime
 import pickle
-import urllib.request
-import urllib.error
+import sys
+from dataclasses import dataclass
+from datetime import datetime
+from typing import Callable, Optional, Union
+
+import requests
+from bs4 import BeautifulSoup
 
 
-etags: Dict[str, str]
-etags = {}
+@dataclass
+class Rule:
+    path: str
+    updated: bool = False
 
 
-def get_request(url, key=None):
-    if key is None:
-        key = url
-    try:
-        req = urllib.request.Request(url, headers={"If-None-Match": etags[key]})
-    except KeyError:
-        req = urllib.request.Request(url)
-    return req
+@dataclass
+class TextRule:
+    url: str
+    key: str
+    path: str
+    updated: bool = False
 
 
-def fetch(url, filename, key=None) -> bool:
-    req = get_request(url, key)
-    try:
-        rf = urllib.request.urlopen(req)
-    except urllib.error.HTTPError as e:
-        print("error: {} {}: {}".format(e.code, e.reason, url))
-        return False
+@dataclass
+class HtmlRule:
+    url: str
+    key: str
+    adblock: Rule
+    domain: Rule
+
+
+@dataclass
+class StructuredRule:
+    path: str
+    rules: list[Union[TextRule, Rule]]
+
+
+def fetch(etags: dict[str, str], rule: Union[TextRule, HtmlRule]):
+    if isinstance(rule, HtmlRule):
+        fetch_html(etags, rule, parse_nanj_wiki)
     else:
-        if key is None:
-            key = url
-        try:
-            etags[key] = rf.info()["etag"]
-        except KeyError:
-            pass
-        with open(filename, "wb") as wf:
-            wf.write(rf.read())
-        print("update: {}".format(filename))
-        rf.close()
-        return True
+        fetch_text(etags, rule)
 
 
-def fetch_nanj_supplement(url, supplement_rules, dns_rules) -> bool:
-    req = get_request(url)
-    try:
-        rf = urllib.request.urlopen(req)
-    except urllib.error.HTTPError as e:
-        print("error: {} {}: {}".format(e.code, e.reason, url))
-        return False
+def _fetch(etags: dict[str, str], rule: Union[TextRule, HtmlRule]) -> Optional[requests.Response]:
+    if rule.key not in etags:
+        headers = {}
     else:
-        try:
-            etags[url] = rf.info()["etag"]
-        except KeyError:
-            pass
-        rules = parse(rf.read())
-        with open(supplement_rules, "w", encoding="utf-8") as wf:
-            wf.write(rules[0])
-        print("update: {}".format(supplement_rules))
-        with open(dns_rules, "w", encoding="utf-8") as wf:
-            wf.write(rules[1])
-        print("update: {}".format(dns_rules))
-        rf.close()
-        return True
+        headers = {"If-None-Match": etags[rule.key]}
+    r = requests.get(rule.url, headers=headers)
+    if r.status_code == requests.codes.ok:
+        return r
+    else:
+        print("{} {}: {}".format(r.status_code, r.reason, rule.url))
 
 
-def parse(doc):
+def fetch_text(etags: dict[str, str], rule: TextRule):
+    r = _fetch(etags, rule)
+    if r is not None:
+        r.encoding = "utf-8"
+        open(rule.path, "w", encoding="utf-8", newline="").write(r.text)
+        rule.updated = True
+        print("update: {}".format(rule.path))
+        etags[rule.key] = r.headers["etag"]
+
+
+def fetch_html(etags: dict[str, str], rule: HtmlRule, parse: Callable[[str], tuple[str, str]]):
+    r = _fetch(etags, rule)
+    if r is not None:
+        adblock, domain = parse(r.text)
+        open(rule.adblock.path, "w", encoding="utf-8").write(adblock)
+        rule.adblock.updated = True
+        print("update: {}".format(rule.adblock.path))
+        open(rule.domain.path, "w", encoding="utf-8").write(domain)
+        rule.domain.updated = True
+        print("update: {}".format(rule.domain.path))
+        etags[rule.key] = r.headers["etag"]
+
+
+def parse_nanj_wiki(doc: str) -> tuple[str, str]:
     soup = BeautifulSoup(doc, "html.parser")
     quotes = soup.select("#content blockquote p.quotation")
     rules = []
@@ -77,62 +91,61 @@ def parse(doc):
     return (rules[0], rules[1])
 
 
-def concat(dst, sources):
-    with open(dst, "w", encoding="utf-8") as wf:
-        for src in sources:
-            with open(src, "r", encoding="utf-8") as rf:
-                wf.write(rf.read())
-
-
-def load_etags(etags_file):
-    global etags
-    try:
-        rf = open(etags_file, "rb")
-    except IOError:
-        etags = {}
-    else:
-        etags = pickle.load(rf)
-        rf.close()
-
-
-def save_etags(etags_file):
-    with open(etags_file, "wb") as fw:
-        pickle.dump(etags, fw)
+def merge(rule: StructuredRule):
+    if any(r.updated for r in rule.rules):
+        open(rule.path, "w", encoding="utf-8").write("".join(open(r.path, "r", encoding="utf-8").read() for r in rule.rules))
+        print("update: {}".format(rule.path))
 
 
 def main():
+    path_etags = "cache/etags"
     today = datetime.today()
-
-    r280_adblock_url = "https://280blocker.net/files/280blocker_adblock_{:%Y%m}.txt".format(today)
-    r280_domain_url = "https://280blocker.net/files/280blocker_domain_ag_{:%Y%m}.txt".format(today)
-    nanj_ag_url = "https://raw.githubusercontent.com/nanj-adguard/nanj-filter/master/nanj-filter.txt"
-    nanj_wiki_url = "https://wikiwiki.jp/nanj-adguard/%E3%81%AA%E3%82%93J%E6%8B%A1%E5%BC%B5%E3%83%95%E3%82%A3%E3%83%AB%E3%82%BF%E3%83%BC"
-    r280_adblock_file = "dist/280blocker_adblock_filter.txt"
-    r280_domain_file = "dist/280blocker_domain_ag_filter.txt"
-    nanj_ag_file = "dist/nanj-filter.txt"
-    nanj_wiki_adblock_file = "dist/supplement_rules.txt"
-    nanj_wiki_domain_file = "dist/DNS_rules.txt"
-    conc_adblock_nanj_file = "dist/01_adblock_rules.txt"
-    conc_domain_nanj_file = "dist/01_domain_ag_rules.txt"
-
-    etags_file = "cache/etags"
-
-    load_etags(etags_file)
-
-    b1 = fetch(r280_adblock_url, r280_adblock_file, key="https://280blocker.net/files/280blocker_adblock_xxxxxx.txt")
-    b2 = fetch(r280_domain_url, r280_domain_file, key="https://280blocker.net/files/280blocker_domain_ag_xxxxxx.txt")
-    b3 = fetch(nanj_ag_url, nanj_ag_file)
-    b4 = fetch_nanj_supplement(nanj_wiki_url, nanj_wiki_adblock_file, nanj_wiki_domain_file)
-
-    if b1 or b3 or b4:
-        concat(conc_adblock_nanj_file, [r280_adblock_file, nanj_ag_file, nanj_wiki_adblock_file])
-        print("update: {}".format(conc_adblock_nanj_file))
-
-    if b2 or b4:
-        concat(conc_domain_nanj_file, [r280_domain_file, nanj_wiki_domain_file])
-        print("update: {}".format(conc_domain_nanj_file))
-
-    save_etags(etags_file)
+    r280_adblock = TextRule(
+        url="https://280blocker.net/files/280blocker_adblock_{:%Y%m}.txt".format(today),
+        key="https://280blocker.net/files/280blocker_adblock_xxxxxx.txt",
+        path="dist/280blocker_adblock_filter.txt"
+    )
+    nanj_filter = TextRule(
+        url="https://raw.githubusercontent.com/nanj-adguard/nanj-filter/master/nanj-filter.txt",
+        key="https://raw.githubusercontent.com/nanj-adguard/nanj-filter/master/nanj-filter.txt",
+        path="dist/nanj-filter.txt"
+    )
+    r280_domain = TextRule(
+        url="https://280blocker.net/files/280blocker_domain_ag_{:%Y%m}.txt".format(today),
+        key="https://280blocker.net/files/280blocker_domain_ag_xxxxxx.txt",
+        path="dist/280blocker_domain_ag_filter.txt"
+    )
+    nanj_wiki = HtmlRule(
+        url="https://wikiwiki.jp/nanj-adguard/%E3%81%AA%E3%82%93J%E6%8B%A1%E5%BC%B5%E3%83%95%E3%82%A3%E3%83%AB%E3%82%BF%E3%83%BC",
+        key="https://wikiwiki.jp/nanj-adguard/%E3%81%AA%E3%82%93J%E6%8B%A1%E5%BC%B5%E3%83%95%E3%82%A3%E3%83%AB%E3%82%BF%E3%83%BC",
+        adblock=Rule(
+            path="dist/supplement_rules.txt"
+        ),
+        domain=Rule(
+            path="dist/DNS_rules.txt"
+        )
+    )
+    adblock_rules = StructuredRule(
+        rules=[r280_adblock, nanj_filter, nanj_wiki.adblock],
+        path="dist/01_adblock_rules.txt"
+    )
+    domain_ag_rules = StructuredRule(
+        rules=[r280_domain, nanj_wiki.domain],
+        path="dist/01_domain_ag_rules.txt"
+    )
+    try:
+        etags = pickle.load(open(path_etags, "rb"))
+    except IOError:
+        etags = {}
+    if len(sys.argv) > 1 and sys.argv[1] == "-f":
+        etags = {}
+    fetch(etags, r280_adblock)
+    fetch(etags, nanj_filter)
+    fetch(etags, r280_domain)
+    fetch(etags, nanj_wiki)
+    merge(adblock_rules)
+    merge(domain_ag_rules)
+    pickle.dump(etags, open(path_etags, "wb"))
 
 
 if __name__ == '__main__':
