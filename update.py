@@ -28,6 +28,7 @@ class HtmlRule:
     key: str
     adblock: Rule
     domain: Rule
+    parser: Callable[[str], tuple[str, str]]
 
 
 @dataclass
@@ -38,7 +39,7 @@ class StructuredRule:
 
 def fetch(etags: dict[str, str], rule: Union[TextRule, HtmlRule]):
     if isinstance(rule, HtmlRule):
-        fetch_html(etags, rule, parse_nanj_wiki)
+        fetch_html(etags, rule)
     else:
         fetch_text(etags, rule)
 
@@ -65,10 +66,10 @@ def fetch_text(etags: dict[str, str], rule: TextRule):
         etags[rule.key] = r.headers["etag"]
 
 
-def fetch_html(etags: dict[str, str], rule: HtmlRule, parse: Callable[[str], tuple[str, str]]):
+def fetch_html(etags: dict[str, str], rule: HtmlRule):
     r = _fetch(etags, rule)
     if r is not None:
-        adblock, domain = parse(r.text)
+        adblock, domain = rule.parser(r.text)
         open(rule.adblock.path, "w", encoding="utf-8").write(adblock)
         rule.adblock.updated = True
         print("update: {}".format(rule.adblock.path))
@@ -123,7 +124,8 @@ def main():
         ),
         domain=Rule(
             path="dist/DNS_rules.txt"
-        )
+        ),
+        parser=parse_nanj_wiki
     )
     adblock_rules = StructuredRule(
         rules=[r280_adblock, nanj_filter, nanj_wiki.adblock],
