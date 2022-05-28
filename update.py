@@ -50,10 +50,11 @@ def _fetch(etags: dict[str, str], rule: Union[TextRule, HtmlRule]) -> Optional[r
     else:
         headers = {"If-None-Match": etags[rule.key]}
     r = requests.get(rule.url, headers=headers)
+    print("{} {}: {}".format(r.status_code, r.reason, rule.url))
     if r.status_code == requests.codes.ok:
         return r
     else:
-        print("{} {}: {}".format(r.status_code, r.reason, rule.url))
+        return None
 
 
 def fetch_text(etags: dict[str, str], rule: TextRule):
