@@ -10,7 +10,7 @@
 # Please use it in a system that can block subdomains.
 #
 #
-# Lastupdate: 2022-06-30
+# Lastupdate: 2022-07-29
 #
 
 ||domain.dummy280280.net^
@@ -1515,6 +1515,65 @@
 ||13c5a60b6b.fca4e27bb3.com^
 ||captivatepestilentstormy.com^
 ||youradexchange.com^
+||be8824e685.27417130d3.com^
+||understoodreceivermisunderstand.com^
+||educationaldetachblob.com^
+||aeeg5idiuenbi7erger.com^
+||aufr67i8sten.com^
+||go.xlivrdr.com^
+||clicks.pipaffiliates.com^
+||fcouvtlwzocok.com^
+||ttwscqlqmbcb.com^
+||glizauvo.net^
+||betotodilea.com^
+||poshhateful.com^
+||sneakyinfected.com^
+||crumbtypewriterhome.com^
+||creative.xlrdr.com^
+||go.xlrdr.com^
+||migrantspiteconnecting.com^
+||ymsis.ttqdr.com^
+||s.optnx.com^
+||saumeechoa.com^
+||ashoupsu.com^
+||vntia.diissue.xyz^
+||eshouloo.net^
+||clicks.affstrack.com^
+||possessionaddictedflight.com^
+||lgtdkpfnor.com^
+||lgtdkpfnor.com^
+||click.d2pass.com^
+||columnisterror.com^
+||limitationvolleyballdejected.com^
+||recordingshipping.com^
+||eeshemto.com^
+||js.manga9.co^
+||eephaush.com^
+||griksoud.net^
+||eu.got-to-be.com^
+||responseinfogets.gq^
+||xml-v4.pxfindone.com^
+||ahw2lok.txxx.com^
+||bande2az.com^
+||deliverytraffnews.com^
+||lhinqc.oculal.top^
+||inspectorstrongerpill.com^
+||getels.com^
+||getapo.com^
+||getnee.com^
+||getcong.com^
+||getotal.com^
+||getove.com^
+||getony.com^
+||getmari.com^
+||getwil.com^
+||gettran.com^
+||getnapa.com^
+||getyong.com^
+||gettine.com^
+||getkel.com^
+||getibo.com^
+||cabbagehomme.casa^
 
 @@||www.googleadservices.com^
 
