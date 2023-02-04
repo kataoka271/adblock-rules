@@ -1,0 +1,21 @@
+[tool.poetry]
+name = "adblock-rules"
+version = "0.1.0"
+description = ""
+authors = ["Hiroaki Kataoka <k_hir@hotmail.com>"]
+readme = "README.md"
+packages = [{include = "adblock_rules"}]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+requests = "^2.28.2"
+beautifulsoup4 = "^4.11.2"
+
+
+[tool.poetry.group.env.dependencies]
+autopep8 = "^2.0.1"
+flake8 = "^6.0.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
