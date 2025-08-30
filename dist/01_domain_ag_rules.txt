@@ -10,7 +10,7 @@
 # Please use it in a system that can block subdomains.
 #
 #
-# Lastupdate: 2024-12-12
+# Lastupdate: 2025-07-31
 #
 
 ||domain.dummy280280.net^
@@ -1093,7 +1093,6 @@
 ||highsecurecn.com^
 ||highsecureus.com^
 ||hyperpromote.com^
-||img.gs-ad.jp^
 ||impression-east.liftoff.io^
 ||infolinks.com^
 ||inpagepush.com^
@@ -2327,7 +2326,6 @@
 ||taryardtugged.com^
 ||profitablecreativeformat.com^
 ||wigfulchiack.com^
-||storage.ko-fi.com^
 ||coignsunrent.com^
 ||npkzqlhtecxx.com^
 ||6f752f73ce.com^
@@ -2905,6 +2903,60 @@
 ||nw.capesunlocks.com^
 ||ripheeksirg.net^
 ||cdn.jp1media.com^
+||ptoorauptoud.net^
+||c.j8jp.com^
+||blaring-chocolate.com^
+||gw.rickywhence.com^
+||buzzonclick.com^
+||childhoodstudioconversation.com^
+||carrier202205.tokyo^
+||gggpht.com^
+||baccarat212.com^
+||go.ero-vtuber.com^
+||diagramjawlineunhappy.com^
+||besmeargleor.com^
+||creative.tklivechat.com^
+||zs.bemiresunlevel.com^
+||creative.rmishe.com^
+||ay.lalledwited.com^
+||eu-central-1.cdn-cloud.net^
+||hhklc.com^
+||rh.unactkiosk.com^
+||new.plus-eromanga.com^
+||level.18huhu.com^
+||adpushup.com^
+||gs-ad.jp^
+||adsmarch.online^
+||imkirh.com^
+||trigs-sockets.com^
+||inherentdecide.com^
+||unmectappic.com^
+||fs-loader.com^
+||lt.camassmastic.com^
+||creative.live.javdock.com^
+||scratchyhook.com^
+||aj2532.bid^
+||yjo.youjizz.com^
+||getallmedia.com^
+||ads-lite2.net^
+||unibotscdn.com^
+||unibots.in^
+||d-markets.net^
+||kzuocxorfo.com^
+||ivmxckqpfddky.com^
+||tcrzhmdjeswj.com^
+||pubadx.one^
+||yn.algiersreests.com^
+||bngrol.com^
+||clickadu.net^
+||amawidget.yutbr.com^
+||api.ada-cloud.com^
+||recruitbox.media.iid.jp^
+||godkc.com^
+||wary-prior.com^
+||ds6n6c.com^
+||ib.semaisetything.com^
+||xr.staxisclivias.com^
 
 @@||www.googleadservices.com^
 
